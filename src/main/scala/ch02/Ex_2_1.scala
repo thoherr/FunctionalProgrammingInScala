@@ -23,3 +23,18 @@ object Ex_2_2 {
     loop(1)
   }
 }
+
+object Ex_2_3 {
+  def curry[A,B,C](f: (A,B) => C) : A => (B => C) =
+    a => b => f(a, b)
+}
+
+object Ex_2_4 {
+  def uncurry[A,B,C](f: A => B => C) : (A, B) => C =
+    (a, b) => f(a)(b)
+}
+
+object Ex_2_5 {
+  def compose[A,B,C](f: A => B, g: B => C) : A => C =
+    a => g(f(a))
+}
