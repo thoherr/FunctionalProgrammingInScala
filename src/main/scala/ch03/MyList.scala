@@ -108,4 +108,18 @@ object MyList {
   def reverse[A](as: MyList[A]): MyList[A] =
     foldLeft(as, Nil: MyList[A])((xs, x) => Cons(x, xs))
 
+  // Exercise 3.13
+  // foldRight in terms of foldLeft is actually simple if you get the idea...
+  // reverse the list (tail recursive) and process it from left to right (tail recursive)
+  def foldRightWithFoldLeft[A, B](as: MyList[A], z: B)(f: (A, B) => B): B =
+    foldLeft(reverse(as), z)((b, a) => f(a, b))
+
+  // Exercise 3.14
+  def append[A](as: MyList[A], bs: MyList[A]): MyList[A] =
+    foldRight(as, bs)(Cons(_, _))
+
+  // Exercise 3.15
+  def concat[A](ll:MyList[MyList[A]]) : MyList[A] =
+    foldRight(ll, Nil: MyList[A])(append(_,_))
+
 }
