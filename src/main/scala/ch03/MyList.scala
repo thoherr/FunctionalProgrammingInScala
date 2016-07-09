@@ -77,13 +77,21 @@ object MyList {
     foldRight(as, 0)((x, y) => 1 + y)
 
   // Exercide 3.10
-  def foldLeft[A, B](as: MyList[A], z: B)(f: (B, A) => B): B = {
+  def foldLeftFirstAttempt[A, B](as: MyList[A], z: B)(f: (B, A) => B): B = {
     @annotation.tailrec
     def loop(l: MyList[A], acc: B): B = l match {
       case Nil => acc
       case Cons(x, xs) => loop(xs, f(acc, x))
     }
     loop(as, z)
+  }
+
+  // Exercide 3.10
+  // This is the sample solution. We apparently don't need an internal loop... ;-)
+  @annotation.tailrec
+  def foldLeft[A, B](l: MyList[A], z: B)(f: (B, A) => B): B = l match {
+    case Nil => z
+    case Cons(h, t) => foldLeft(t, f(z, h))(f)
   }
 
   // Exercise 3.11
@@ -98,6 +106,6 @@ object MyList {
 
   // Exercise 3.12
   def reverse[A](as: MyList[A]): MyList[A] =
-    foldLeft(as, Nil:MyList[A])((xs, x) => Cons(x, xs))
+    foldLeft(as, Nil: MyList[A])((xs, x) => Cons(x, xs))
 
 }
