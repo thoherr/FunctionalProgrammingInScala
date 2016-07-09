@@ -24,6 +24,30 @@ object MyList {
     case Cons(x, xs) => xs
   }
 
+  // Exercise 3.3
+  def setHead[A](ls: MyList[A], h: A): MyList[A] = ls match {
+    case Nil => Cons(h, ls) // Could also be an error
+    case Cons(x, xs) => Cons(h, xs)
+  }
+
+  // Execrcise 3.4
+  @annotation.tailrec
+  def drop[A](l: MyList[A], n: Int): MyList[A] =
+    if (n <= 0) l
+    else drop(tail(l), n - 1)
+
+  // Exercise 3.5
+  def dropWhile[A](l:MyList[A], f: A => Boolean) : MyList[A] = l match {
+    case Nil => Nil  // This could also be an error
+    case Cons(x, xs) => if (f(x)) dropWhile(tail(l), f) else l
+  }
+
+  // Exercise 3.6
+  def init[A](l: MyList[A]) : MyList[A] = l match {
+    case Cons(x, Nil) => Nil
+    case Cons(x, xs) => Cons(x, init(xs))
+  }
+
   def apply[A](as: A*): MyList[A] =
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
