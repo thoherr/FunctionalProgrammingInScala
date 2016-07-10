@@ -155,10 +155,25 @@ object MyList {
   }
 
   // Exercise 3.23
-  def zipWith[A, B, C](as: MyList[A], bs: MyList[B], f: (A, B) => C): MyList[C] = (as, bs) match {
+  def zipWith[A, B, C](as: MyList[A], bs: MyList[B])(f: (A, B) => C): MyList[C] = (as, bs) match {
     case (_, Nil) => Nil
     case (Nil, _) => Nil
-    case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2, f))
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
   }
+
+  // Exercise 3.24
+  def hasSubsequence[A](sup: MyList[A], sub: MyList[A]): Boolean = {
+    def startsWith(l: MyList[A], s: MyList[A]): Boolean = (l, s) match {
+      case (_, Nil) => true
+      case (Nil, _) => false
+      case (Cons(hl, tl), Cons(hs, ts)) => hl == hs && startsWith(tl, ts)
+    }
+    if (startsWith(sup, sub)) true
+    else sup match {
+      case Nil => false
+      case Cons(h, t) => hasSubsequence(t, sub)
+    }
+  }
+
 
 }
