@@ -119,7 +119,23 @@ object MyList {
     foldRight(as, bs)(Cons(_, _))
 
   // Exercise 3.15
-  def concat[A](ll:MyList[MyList[A]]) : MyList[A] =
-    foldRight(ll, Nil: MyList[A])(append(_,_))
+  def concat[A](ll: MyList[MyList[A]]): MyList[A] =
+    foldRight(ll, Nil: MyList[A])(append(_, _))
+
+  // Exercise 3.16
+  def add1(l: MyList[Int]): MyList[Int] =
+    foldRight(l, Nil: MyList[Int])((h, t) => Cons(h + 1, t))
+
+  // Exercise 3.17
+  def double2string(l: MyList[Double]): MyList[String] =
+    foldRight(l, Nil: MyList[String])((h, t) => Cons(h.toString, t))
+
+  // Exercise 3.18
+  def map[A, B](as: MyList[A], f: A => B): MyList[B] =
+    foldRight(as, Nil: MyList[B])((h, t) => Cons(f(h), t))
+
+  // Exercise 3.19
+  def filter[A](as: MyList[A], f: A => Boolean): MyList[A] =
+    foldRight(as, Nil: MyList[A])((h, t) => if (f(h)) Cons(h, t) else t)
 
 }
