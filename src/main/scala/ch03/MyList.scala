@@ -162,17 +162,18 @@ object MyList {
   }
 
   // Exercise 3.24
-  def hasSubsequence[A](sup: MyList[A], sub: MyList[A]): Boolean = {
-    def startsWith(l: MyList[A], s: MyList[A]): Boolean = (l, s) match {
-      case (_, Nil) => true
-      case (Nil, _) => false
-      case (Cons(hl, tl), Cons(hs, ts)) => hl == hs && startsWith(tl, ts)
-    }
-    if (startsWith(sup, sub)) true
-    else sup match {
-      case Nil => false
-      case Cons(h, t) => hasSubsequence(t, sub)
-    }
+  @annotation.tailrec
+  def startsWith[A](l: MyList[A], s: MyList[A]): Boolean = (l, s) match {
+    case (_, Nil) => true
+    case (Cons(hl, tl), Cons(hs, ts)) if hl == hs => startsWith(tl, ts)
+    case _ => false
+  }
+
+  @annotation.tailrec
+  def hasSubsequence[A](sup: MyList[A], sub: MyList[A]): Boolean = sup match {
+    case Nil => sub == Nil
+    case _ if startsWith(sup, sub) => true
+    case Cons(h, t) => hasSubsequence(t, sub)
   }
 
 
