@@ -4,6 +4,8 @@ Tracking my exercises from the excellent book "Functional Programming in Scala" 
 
 This is probably the best book on functional programming in Scala.
 
+The official repository of hints and answers for the book exercises is located at https://github.com/fpinscala/fpinscala in GitHub.
+
 ## compiling and running with sbt
 
 The Exercises are structured in packages for each chapter of the book.
